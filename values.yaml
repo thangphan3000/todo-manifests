@@ -1,0 +1,40 @@
+replicaCount: 1
+
+image:
+  frontend:
+    repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
+    pullPolicy: IfNotPresent
+    tag: latest
+  backend:
+    repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-backend
+    pullPolicy: IfNotPresent
+    tag: latest
+
+service:
+  frontend:
+    type: ClusterIP
+    port: 80
+  backend:
+    type: ClusterIP
+    port: 3000
+
+containers:
+  frontend:
+    port: 80
+  backend:
+    port: 3000
+
+resources:
+  frontend:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      memory: "500Mi"
+
+  backend:
+    requests:
+      cpu: 1
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
