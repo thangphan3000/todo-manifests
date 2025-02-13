@@ -17,6 +17,9 @@ spec:
       containers:
         - name: frontend
           image: {{ .Values.image.frontend.repository }}:{{ .Values.image.frontend.tag }}
+          env:
+            - name: VITE_BASE_API
+              value: "https://api.cozy-todo.click/api"
           ports:
             - containerPort: {{ .Values.containers.frontend.port }}
           resources:
