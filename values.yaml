@@ -5,19 +5,16 @@ ingress:
   hosts:
     - host: web.cozy-todo.click
       service:
-        name: frontend-service
+        name: frontend
         port: 81
 
     - host: api.cozy-todo.click
       service:
-        name: backend-service
+        name: backend
         port: 3001
   tls:
     secretName: tls-certificate
     wildcardDomain: "*.cozy-todo.click"
-    hosts:
-      - web.cozy-todo.click
-      - api.cozy-todo.click
 
 certManager:
   issuerName: letsencrypt-prod
@@ -33,13 +30,13 @@ certManager:
 
 services:
   frontend:
-    name: frontend-service
+    name: frontend
     type: ClusterIP
     port: 81
     targetPort: 80
 
   backend:
-    name: backend-service
+    name: backend
     type: ClusterIP
     port: 3001
     targetPort: 3000

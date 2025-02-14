@@ -17,13 +17,11 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ .service.name }}
+                name: {{ $.Release.Name }}-{{ .service.name }}
                 port:
                   number: {{ .service.port }}
     {{- end }}
   tls:
     - hosts:
-        {{- range .Values.ingress.tls.hosts }}
-        - {{ . }}
-        {{- end }}
+        - {{ .Values.ingress.tls.wildcardDomain | quote }}
       secretName: {{ .Values.ingress.tls.secretName }}
