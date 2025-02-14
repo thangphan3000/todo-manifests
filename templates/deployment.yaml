@@ -16,6 +16,7 @@ spec:
       labels:
         app: {{ $.Chart.Name }}-{{ $service }}
     spec:
+      serviceAccountName: secrets-store-csi-driver
       containers:
         - name: {{ $service }}
           image: {{ $config.image.repository }}:{{ $config.image.tag }}
