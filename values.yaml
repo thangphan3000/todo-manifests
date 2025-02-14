@@ -3,7 +3,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: cozy-todo.click
+    - host: web.cozy-todo.click
       service:
         name: frontend-service
         port: 81
@@ -15,6 +15,9 @@ ingress:
   tls:
     secretName: tls-certificate
     wildcardDomain: "*.cozy-todo.click"
+    hosts:
+      - web.cozy-todo.click
+      - api.cozy-todo.click
 
 certManager:
   issuerName: letsencrypt-prod

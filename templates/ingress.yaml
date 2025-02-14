@@ -23,6 +23,7 @@ spec:
     {{- end }}
   tls:
     - hosts:
-        - api.cozy-todo.click
-        - cozy-todo.click
+        {{- range .Values.ingress.tls.hosts }}
+        - {{ . }}
+        {{- end }}
       secretName: {{ .Values.ingress.tls.secretName }}
