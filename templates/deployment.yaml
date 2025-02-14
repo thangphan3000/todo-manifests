@@ -1,50 +1,26 @@
+{{- range $service, $config := .Values.deployments }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-frontend
+  name: {{ $.Release.Name }}-{{ $service }}
   labels:
-    app: {{ .Chart.Name }}-frontend
+    app: {{ $.Chart.Name }}-{{ $service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ $config.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}-frontend
+      app: {{ $.Chart.Name }}-{{ $service }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}-frontend
+        app: {{ $.Chart.Name }}-{{ $service }}
     spec:
       containers:
-        - name: frontend
-          image: {{ .Values.image.frontend.repository }}:{{ .Values.image.frontend.tag }}
-          env:
-            - name: VITE_BASE_API
-              value: "https://api.cozy-todo.click/api"
+        - name: {{ $service }}
+          image: {{ $config.image.repository }}:{{ $config.image.tag }}
+          imagePullPolicy: {{ $config.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.containers.frontend.port }}
+            - containerPort: {{ $config.port }}
           resources:
-            {{- toYaml .Values.resources.frontend | nindent 12 }}
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Release.Name }}-backend
-  labels:
-    app: {{ .Chart.Name }}-backend
-spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app: {{ .Chart.Name }}-backend
-  template:
-    metadata:
-      labels:
-        app: {{ .Chart.Name }}-backend
-    spec:
-      containers:
-        - name: backend
-          image: {{ .Values.image.backend.repository }}:{{ .Values.image.backend.tag }}
-          ports:
-            - containerPort: {{ .Values.containers.backend.port }}
-          resources:
-            {{- toYaml .Values.resources.backend | nindent 12 }}
+            {{- toYaml $config.resources | nindent 12 }}
+{{- end }}

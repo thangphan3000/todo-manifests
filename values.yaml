@@ -1,40 +1,71 @@
-replicaCount: 1
+ingress:
+  ingressClassName: ingress-nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: cozy-todo.click
+      service:
+        name: frontend-service
+        port: 81
 
-image:
-  frontend:
-    repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
-    pullPolicy: IfNotPresent
-    tag: latest
-  backend:
-    repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-backend
-    pullPolicy: IfNotPresent
-    tag: latest
+    - host: api.cozy-todo.click
+      service:
+        name: backend-service
+        port: 3001
+  tls:
+    secretName: tls-certificate
+    wildcardDomain: "*.cozy-todo.click"
 
-service:
+certManager:
+  issuerName: letsencrypt-prod
+  email: thangphan.onthego@gmail.com
+  server: https://acme-v02.api.letsencrypt.org/directory
+  privateKeySecretName: letsencrypt-prod-issuer
+  dnsSolver:
+    dnsZones:
+      - cozy-todo.click
+    provider: route53
+    region: ap-southeast-1
+    hostedZoneID: Z05835622XT8SM6G0VX1B
+
+services:
   frontend:
+    name: frontend-service
     type: ClusterIP
-    port: 80
+    port: 81
+    targetPort: 80
+
   backend:
+    name: backend-service
     type: ClusterIP
-    port: 3000
+    port: 3001
+    targetPort: 3000
 
-containers:
+deployments:
   frontend:
+    image:
+      repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
+      pullPolicy: IfNotPresent
+      tag: latest
     port: 80
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "156Mi"
+      limits:
+        memory: "200Mi"
+
   backend:
+    image:
+      repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-backend
+      pullPolicy: IfNotPresent
+      tag: latest
     port: 3000
-
-resources:
-  frontend:
-    requests:
-      cpu: "250m"
-      memory: "256Mi"
-    limits:
-      memory: "500Mi"
-
-  backend:
-    requests:
-      cpu: 1
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 1
+        memory: "256Mi"
+      limits:
+        memory: "312Mi"

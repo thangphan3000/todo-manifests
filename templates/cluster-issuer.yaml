@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ .Values.certManager.issuerName }}
+spec:
+  acme:
+    email: {{ .Values.certManager.email }}
+    server: {{ .Values.certManager.server }}
+    privateKeySecretRef:
+      name: {{ .Values.certManager.privateKeySecretName }}
+    solvers:
+      - selector:
+          dnsZones:
+            {{- toYaml .Values.certManager.dnsSolver.dnsZones | nindent 12 }}
+        dns01:
+          {{- if eq .Values.certManager.dnsSolver.provider "route53" }}
+          route53:
+            region: {{ .Values.certManager.dnsSolver.region }}
+            hostedZoneID: {{ .Values.certManager.dnsSolver.hostedZoneID }}
+          {{- end }}
