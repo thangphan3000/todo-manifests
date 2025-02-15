@@ -23,6 +23,14 @@ spec:
           imagePullPolicy: {{ $config.image.pullPolicy }}
           ports:
             - containerPort: {{ $config.port }}
+          env:
+            {{- range $config.secrets }}
+            - name: {{ .name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $config.secretName }}
+                  key: {{ .key }}
+            {{- end }}
           resources:
             {{- toYaml $config.resources | nindent 12 }}
 {{- end }}

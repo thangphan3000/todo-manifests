@@ -28,6 +28,33 @@ certManager:
     region: ap-southeast-1
     hostedZoneID: Z05835622XT8SM6G0VX1B
 
+secretProvider:
+  name: aws-secrets
+  provider: aws
+  region: ap-southeast-1
+  usePodIdentity: true
+  objectName: nonprod/app_config
+  objectType: secretsmanager
+  jmesPath:
+    - path: API_URL
+      objectAlias: API_URL_ALIAS
+    - path: WEB_URL
+      objectAlias: WEB_URL_ALIAS
+    - path: API_APP_PORT
+      objectAlias: API_APP_PORT_ALIAS
+    - path: DB_HOST_SOURCE
+      objectAlias: DB_HOST_SOURCE_ALIAS
+  secretObjects:
+    name: app-config-secret
+    type: Opaque
+    data:
+      - objectName: API_URL_ALIAS
+        key: k8s-api-url
+      - objectName: WEB_URL_ALIAS
+        key: k8s-web-url
+      - objectName: DB_HOST_SOURCE_ALIAS
+        key: k8s-db-host-source
+
 services:
   frontend:
     name: frontend
@@ -49,6 +76,10 @@ deployments:
       tag: latest
     port: 80
     replicaCount: 1
+    secretName: app-config-secret
+    secrets:
+      - name: API_URL
+        key: k8s-api-url
     resources:
       requests:
         cpu: "250m"
@@ -63,6 +94,12 @@ deployments:
       tag: latest
     port: 3000
     replicaCount: 1
+    secretName: app-config-secret
+    secrets:
+      - name: API_URL
+        key: k8s-web-url
+      - name: DB_HOST_SOURCE
+        key: k8s-db-host-source
     resources:
       requests:
         cpu: 1
