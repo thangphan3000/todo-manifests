@@ -60,7 +60,7 @@ services:
     name: frontend
     type: ClusterIP
     port: 81
-    targetPort: 80
+    targetPort: 8080
 
   backend:
     name: backend
@@ -74,7 +74,7 @@ deployments:
       repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
       pullPolicy: Always
       tag: latest
-    port: 80
+    port: 8080
     replicaCount: 1
     secretName: app-config-secret
     volumeName: app-secrets
