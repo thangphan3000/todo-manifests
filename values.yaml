@@ -72,7 +72,7 @@ deployments:
   frontend:
     image:
       repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       tag: latest
     port: 80
     replicaCount: 1
@@ -91,7 +91,7 @@ deployments:
   backend:
     image:
       repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-backend
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       tag: latest
     port: 3000
     replicaCount: 1
