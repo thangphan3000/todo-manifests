@@ -77,6 +77,7 @@ deployments:
     port: 80
     replicaCount: 1
     secretName: app-config-secret
+    volumeName: app-secrets
     secrets:
       - name: API_URL
         key: k8s-api-url
@@ -95,6 +96,7 @@ deployments:
     port: 3000
     replicaCount: 1
     secretName: app-config-secret
+    volumeName: app-secrets
     secrets:
       - name: API_URL
         key: k8s-web-url

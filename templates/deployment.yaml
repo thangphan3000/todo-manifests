@@ -23,6 +23,10 @@ spec:
           imagePullPolicy: {{ $config.image.pullPolicy }}
           ports:
             - containerPort: {{ $config.port }}
+          volumeMounts:
+            - name: {{ $config.volumeName }}
+              mountPath: /mnt/secrets
+              readOnly: true
           env:
             {{- range $config.secrets }}
             - name: {{ .name }}
@@ -33,4 +37,11 @@ spec:
             {{- end }}
           resources:
             {{- toYaml $config.resources | nindent 12 }}
+      volumes:
+        - name: {{ $config.volumeName }}
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ $.Values.secretProvider.name }}
 {{- end }}

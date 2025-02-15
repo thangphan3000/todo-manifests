@@ -3,12 +3,12 @@ entries:
   todo-cozy:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-02-15T23:38:52.724985+07:00"
+    created: "2025-02-15T23:59:22.645986+07:00"
     description: A Helm chart for deploying todo-cozy application
-    digest: 7319803a279660765648c62a0e246f5b29781ac864fbe7c29eb18ca15146c9b6
+    digest: 8c9004f42471b64dcf8ffc3ebbdca09af867202f6baba559fcfcbf3fc035e8f7
     name: todo-cozy
     type: application
     urls:
     - releases/todo-cozy-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-15T23:38:52.723784+07:00"
+generated: "2025-02-15T23:59:22.644444+07:00"
