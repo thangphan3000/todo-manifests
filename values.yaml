@@ -79,7 +79,7 @@ deployments:
     secretName: app-config-secret
     volumeName: app-secrets
     secrets:
-      - name: API_URL
+      - name: APP_CONFIG_API_URL
         key: k8s-api-url
     resources:
       requests:
