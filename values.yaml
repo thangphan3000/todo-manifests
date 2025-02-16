@@ -44,6 +44,16 @@ secretProvider:
       objectAlias: API_APP_PORT_ALIAS
     - path: DB_HOST_SOURCE
       objectAlias: DB_HOST_SOURCE_ALIAS
+    - path: DB_HOST_REPLICA
+      objectAlias: DB_HOST_REPLICA_ALIAS
+    - path: DB_USERNAME
+      objectAlias: DB_USERNAME_ALIAS
+    - path: DB_PASSWORD
+      objectAlias: DB_PASSWORD_ALIAS
+    - path: DB_NAME
+      objectAlias: DB_NAME_ALIAS
+    - path: DB_PORT
+      objectAlias: DB_PORT_ALIAS
   secretObjects:
     name: app-config-secret
     type: Opaque
@@ -52,8 +62,20 @@ secretProvider:
         key: k8s-api-url
       - objectName: WEB_URL_ALIAS
         key: k8s-web-url
+      - objectName: API_APP_PORT_ALIAS
+        key: k8s-api-app-port
       - objectName: DB_HOST_SOURCE_ALIAS
         key: k8s-db-host-source
+      - objectName: DB_HOST_REPLICA_ALIAS
+        key: k8s-db-host-replica
+      - objectName: DB_USERNAME_ALIAS
+        key: k8s-db-username
+      - objectName: DB_PASSWORD_ALIAS
+        key: k8s-db-password
+      - objectName: DB_NAME_ALIAS
+        key: k8s-db-name
+      - objectName: DB_PORT_ALIAS
+        key: k8s-db-port
 
 services:
   frontend:
@@ -98,10 +120,22 @@ deployments:
     secretName: app-config-secret
     volumeName: app-secrets
     secrets:
-      - name: API_URL
+      - name: WEB_URL
         key: k8s-web-url
+      - name: APP_PORT
+        key: k8s-api-app-port
       - name: DB_HOST_SOURCE
         key: k8s-db-host-source
+      - name: DB_HOST_REPLICA
+        key: k8s-db-host-replica
+      - name: DB_USERNAME
+        key: k8s-db-username
+      - name: DB_PASSWORD
+        key: k8s-db-password
+      - name: DB_NAME
+        key: k8s-db-name
+      - name: DB_PORT
+        key: k8s-db-port
     resources:
       requests:
         cpu: 1
