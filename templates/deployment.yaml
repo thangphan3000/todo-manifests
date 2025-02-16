@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hi-there
+---
 {{- range $service, $config := .Values.deployments }}
 ---
 apiVersion: apps/v1
@@ -16,7 +21,7 @@ spec:
       labels:
         app: {{ $.Chart.Name }}-{{ $service }}
     spec:
-      serviceAccountName: secrets-store-csi-driver
+      serviceAccountName: hi-there
       containers:
         - name: {{ $service }}
           image: {{ $config.image.repository }}:{{ $config.image.tag }}

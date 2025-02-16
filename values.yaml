@@ -2,6 +2,7 @@ ingress:
   ingressClassName: ingress-nginx
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: true
   hosts:
     - host: web.cozy-todo.click
       service:
