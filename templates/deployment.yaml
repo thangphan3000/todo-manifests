@@ -37,6 +37,17 @@ spec:
             {{- end }}
           resources:
             {{- toYaml $config.resources | nindent 12 }}
+          {{- if $config.readinessProbe }}
+          readinessProbe:
+            httpGet:
+              path: {{ $config.readinessProbe.httpGet.path }}
+              port: {{ $config.readinessProbe.httpGet.port }}
+            initialDelaySeconds: {{ $config.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ $config.readinessProbe.periodSeconds }}
+            successThreshold: {{ $config.readinessProbe.successThreshold }}
+            failureThreshold: {{ $config.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ $config.readinessProbe.timeoutSeconds }}
+          {{- end }}
       volumes:
         - name: {{ $config.volumeName }}
           csi:
