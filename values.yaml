@@ -29,6 +29,9 @@ certManager:
     region: ap-southeast-1
     hostedZoneID: Z05835622XT8SM6G0VX1B
 
+serviceAccount:
+  name: app-secrets
+
 secretProvider:
   name: aws-secrets
   provider: aws
