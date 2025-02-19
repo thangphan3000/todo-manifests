@@ -113,6 +113,15 @@ deployments:
         memory: "156Mi"
       limits:
         memory: "200Mi"
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 8080
+      failureThreshold: 3
+      initialDelaySeconds: 4
+      periodSeconds: 15
+      successThreshold: 1
+      timeoutSeconds: 1
 
   backend:
     image:
