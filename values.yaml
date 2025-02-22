@@ -109,7 +109,7 @@ deployments:
         key: k8s-api-url
     resources:
       requests:
-        cpu: "250m"
+        cpu: "100m"
         memory: "156Mi"
       limits:
         memory: "200Mi"
@@ -151,7 +151,7 @@ deployments:
         key: k8s-db-port
     resources:
       requests:
-        cpu: 1
+        cpu: "100m"
         memory: "256Mi"
       limits:
         memory: "312Mi"
