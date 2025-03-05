@@ -7,9 +7,12 @@ metadata:
 spec:
   type: {{ $config.type }}
   ports:
-    - protocol: TCP
-      port: {{ $config.port }}
-      targetPort: {{ $config.targetPort }}
+    {{- range $port := $config.ports}}
+    - name: {{ $port.name }}
+      protocol: {{ $port.protocol }}
+      port: {{ $port.port }}
+      targetPort: {{ $port.targetPort }}
+    {{- end }}
   selector:
     app: {{ $.Release.Name }}-{{ $service }}
 {{- end }}

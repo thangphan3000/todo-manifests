@@ -46,6 +46,8 @@ secretProvider:
       objectAlias: WEB_URL_ALIAS
     - path: API_APP_PORT
       objectAlias: API_APP_PORT_ALIAS
+    - path: METRICS_SERVER_PORT
+      objectAlias: METRICS_SERVER_PORT_ALIAS
     - path: DB_HOST_SOURCE
       objectAlias: DB_HOST_SOURCE_ALIAS
     - path: DB_HOST_REPLICA
@@ -68,6 +70,8 @@ secretProvider:
         key: k8s-web-url
       - objectName: API_APP_PORT_ALIAS
         key: k8s-api-app-port
+      - objectName: METRICS_SERVER_PORT_ALIAS
+        key: k8s-metrics-server-port
       - objectName: DB_HOST_SOURCE_ALIAS
         key: k8s-db-host-source
       - objectName: DB_HOST_REPLICA_ALIAS
@@ -85,14 +89,25 @@ services:
   frontend:
     name: frontend
     type: ClusterIP
-    port: 81
-    targetPort: 8080
+    ports:
+      - name: frontend-app
+        protocol: TCP
+        port: 81
+        targetPort: 8080
 
   backend:
     name: backend
     type: ClusterIP
     port: 3001
-    targetPort: 3000
+    ports:
+      - name: backend-app
+        protocol: TCP
+        port: 3001
+        targetPort: 3000
+      - name: backend-metrics-server
+        protocol: TCP
+        port: 3002
+        targetPort: 9200
 
 deployments:
   frontend:
@@ -137,6 +152,8 @@ deployments:
         key: k8s-web-url
       - name: APP_PORT
         key: k8s-api-app-port
+      - name: METRICS_SERVER_PORT
+        key: k8s-metrics-server-port
       - name: DB_HOST_SOURCE
         key: k8s-db-host-source
       - name: DB_HOST_REPLICA
