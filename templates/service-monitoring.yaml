@@ -1,16 +1,15 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: nodejs-app-service-monitor
-  namespace: default
+  name: {{ .Release.Name }}-backend
   labels:
-    release: prometheus
+    release: {{ .Values.serviceMonitor.release }}
 spec:
   selector:
     matchLabels:
-      hi: there
+      {{- toYaml .Values.serviceMonitor.matchLabels | nindent 6 }}
   endpoints:
-  - port: backend-metrics-server
-    path: /metrics
-    scheme: http
-    interval: 15s
+    - port: {{ .Values.serviceMonitor.port }}
+      path: {{ .Values.serviceMonitor.path }}
+      scheme: {{ .Values.serviceMonitor.scheme }}
+      interval: {{ .Values.serviceMonitor.interval }}

@@ -29,8 +29,7 @@ certManager:
     region: ap-southeast-1
     hostedZoneID: Z05835622XT8SM6G0VX1B
 
-serviceAccount:
-  name: app-secrets
+secretServiceAccountName: app-secrets
 
 secretProvider:
   name: aws-secrets
@@ -98,6 +97,8 @@ services:
   backend:
     name: backend
     type: ClusterIP
+    labels:
+      service: backend
     port: 3001
     ports:
       - name: backend-app
@@ -181,3 +182,12 @@ deployments:
       periodSeconds: 15
       successThreshold: 1
       timeoutSeconds: 1
+
+serviceMonitor:
+  release: prometheus
+  matchLabels:
+    service: backend
+  port: backend-metrics-server
+  path: /metrics
+  scheme: http
+  interval: 15s

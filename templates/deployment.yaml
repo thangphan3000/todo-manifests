@@ -16,7 +16,7 @@ spec:
       labels:
         app: {{ $.Chart.Name }}-{{ $service }}
     spec:
-      serviceAccountName: {{ $.Values.serviceAccount.name }}
+      serviceAccountName: {{ $.Values.secretServiceAccountName }}
       containers:
         - name: {{ $service }}
           image: {{ $config.image.repository }}:{{ $config.image.tag }}

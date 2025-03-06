@@ -5,7 +5,7 @@ kind: Service
 metadata:
   name: {{ $.Release.Name }}-{{ $service }}
   labels:
-    hi: there
+    {{- toYaml $config.labels | nindent 6 }}
 spec:
   type: {{ $config.type }}
   ports:
