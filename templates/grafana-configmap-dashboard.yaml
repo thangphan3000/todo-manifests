@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nodejs-api-dashboard
-  namespace: monitoring
+  name: {{ $.Release.Name }}-{{ .Values.grafanaDashboardConfigMap.name }}
+  namespace: {{ .Values.grafanaDashboardConfigMap.namespace }}
   labels:
     grafana_dashboard: "1"
 data:
