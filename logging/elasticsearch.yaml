@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: s3-credentials
+type: Opaque
+data:
+  s3.client.default.access_key: abc
+  s3.client.default.secret_key: def
+
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: 8.17.4
+  secureSettings:
+    - secretName: s3-credentials
+      entries:
+        - key: s3.client.default.access_key
+        - key: s3.client.default.secret_key
+  nodeSets:
+    - name: default
+      count: 2
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 2Gi
+                  cpu: 0.8
+                limits:
+                  memory: 2Gi
+          initContainers:
+            - name: install-plugin
+              command:
+                - sh
+                - -c
+                - |
+                  bin/elasticsearch-plugin install repository-s3
+          volumes:
+            - name: elasticsearch-data
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+            storageClassName: gp2

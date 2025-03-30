@@ -1,0 +1,28 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+  labels:
+    component: kibana
+spec:
+  version: 8.17.4
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  labels:
+    component: kibana
+spec:
+  ports:
+    - port: 5601
+  selector:
+    component: kibana

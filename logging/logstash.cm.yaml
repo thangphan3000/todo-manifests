@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-config
+  labels:
+    component: logstash
+data:
+  logstash.yml: |
+    http.host: 0.0.0.0
+    pipeline.ecs_compatibility: disabled
+  pipelines.yml: |
+    - pipeline.id: logstash
+      path.config: "/usr/share/logstash/pipeline/logstash.conf"
+
+  log4j2.properties: |
+    logger.logstashpipeline.name = logstash.inputs.beats
+    logger.logstashpipeline.level = error
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-pipeline
+  labels:
+    component: logstash
+data:
+  logstash.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+    }
