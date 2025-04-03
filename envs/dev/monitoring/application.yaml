@@ -8,16 +8,6 @@ metadata:
 spec:
   project: default
   source:
-    helm:
-      parameters:
-        - name: deployments.frontend.image.repository
-          value: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
-        - name: deployments.frontend.image.tag
-          value: 0.1.0
-        - name: deployments.backend.image.repository
-          value: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
-        - name: deployments.backend.image.tag
-          value: 0.1.0
     path: charts/monitoring
     repoURL: git@github.com:thangphan3000/todo-manifests.git
     targetRevision: main
