@@ -18,7 +18,7 @@ spec:
           value: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
         - name: deployments.backend.image.tag
           value: 0.1.0
-    path: charts/application
+    path: charts/monitoring
     repoURL: git@github.com:thangphan3000/todo-manifests.git
     targetRevision: main
   destination:
