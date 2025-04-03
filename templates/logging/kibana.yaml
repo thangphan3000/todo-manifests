@@ -2,6 +2,7 @@ apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
 metadata:
   name: kibana
+  namespace: logging
   labels:
     component: kibana
 spec:
@@ -19,6 +20,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kibana
+  namespace: logging
   labels:
     component: kibana
 spec:
