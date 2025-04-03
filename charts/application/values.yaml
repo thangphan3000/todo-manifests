@@ -115,7 +115,7 @@ deployments:
     image:
       repository: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
       pullPolicy: Always
-      tag: latest
+      tag: 41398356762929ec7a8b1724fe0ae46e5f65e8f5
     port: 8080
     replicaCount: 1
     secretName: app-config-secret
@@ -145,7 +145,7 @@ deployments:
       pullPolicy: Always
       tag: latest
     port: 3000
-    replicaCount: 1
+    replicaCount: 2
     secretName: app-config-secret
     volumeName: app-secrets
     secrets:

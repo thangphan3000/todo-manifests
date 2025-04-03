@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: application-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: |
+      backend=864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-backend:0.x,
+      frontend=864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
+    argocd-image-updater.argoproj.io/update-strategy: semver
+    argocd-image-updater.argoproj.io/write-back-method: git
+spec:
+  destination:
+    # TODO: use external cluster for production env
+    server: https://kubernetes.default.svc
+    namespace: prod
+  source:
+    helm:
+      parameters:
+        - name: deployments.frontend.image.repository
+          value: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
+        - name: deployments.frontend.image.tag
+          value: 0.1.0
+        - name: deployments.backend.image.repository
+          value: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
+        - name: deployments.backend.image.tag
+          value: 0.1.0
+    path: charts/application
+    repoURL: git@github.com:thangphan3000/todo-manifests.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      allowEmpty: false
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Validate=true
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
