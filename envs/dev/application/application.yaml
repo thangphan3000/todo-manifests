@@ -29,6 +29,7 @@ spec:
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
+    namespace: dev
   syncPolicy:
     automated:
       allowEmpty: false
