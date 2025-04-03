@@ -5,7 +5,7 @@ grafanaDashboardConfigMap:
 serviceMonitor:
   release: prometheus
   matchLabels:
-    service: backend
+    service: application-dev-backend
   port: backend-metrics-server
   path: /metrics
   scheme: http
