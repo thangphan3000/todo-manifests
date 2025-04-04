@@ -13,7 +13,7 @@ spec:
         - key: s3.client.default.secret_key
   nodeSets:
     - name: default
-      count: 2
+      count: 1
       podTemplate:
         spec:
           containers:
