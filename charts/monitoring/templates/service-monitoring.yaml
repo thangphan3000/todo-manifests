@@ -4,7 +4,6 @@ metadata:
   name: {{ .Release.Name }}-backend
   labels:
     release: {{ .Values.serviceMonitor.release }}
-  namespace: dev
 spec:
   selector:
     matchLabels:
