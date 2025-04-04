@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}-backend
   labels:
     release: {{ .Values.serviceMonitor.release }}
+    app.kubernetes.io/instance: prometheus
 spec:
   selector:
     matchLabels:
