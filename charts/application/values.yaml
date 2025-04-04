@@ -145,7 +145,7 @@ deployments:
       pullPolicy: Always
       tag: latest
     port: 3000
-    replicaCount: 2
+    replicaCount: 1
     secretName: app-config-secret
     volumeName: app-secrets
     secrets:
