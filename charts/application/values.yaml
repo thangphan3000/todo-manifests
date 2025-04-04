@@ -186,7 +186,7 @@ deployments:
 serviceMonitor:
   release: prometheus
   matchLabels:
-    service: backend
+    service: application-backend
   port: backend-metrics-server
   path: /metrics
   scheme: http
