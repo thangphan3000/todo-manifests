@@ -1,0 +1,42 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prometheus-nodejs-rule
+  labels:
+    app: kube-prometheus-stack-operator
+    app.kubernetes.io/instance: prometheus
+    release: prometheus
+spec:
+  groups:
+  - name: nodejs-api
+    rules:
+    - alert: AppDown
+      annotations:
+        summary: "App {{ printf "{{ $labels.instance }}" }} is down"
+        description: "Failed to scrape {{ printf "{{ $labels.job }}" }} on {{ print "{{ $labels.instance }}" }} for more than 1 minutes. App seems down."
+      expr: up == 0
+      for: 1m
+      labels:
+        severity: critical
+    - alert: HighCPUUsage
+      annotations:
+        summary: "High CPU usage on {{ printf "{{ $labels.instance }}" }}"
+        description: "{{ printf "{{ $labels.instance }}" }} has a CPU usage of {{ print "{{ $value }}" }} for more than 2 minutes"
+      expr: irate(process_cpu_seconds_total{job="todo-cozy-backend"}[1m]) * 100 > 60
+      for: 2m
+      labels:
+        severity: warning
+    - alert: HighErrorRate
+      annotations:
+        summary: "High error rate on {{ printf "{{ $labels.instance }}" }}"
+        description: "{{ printf "{{ $labels.instance }}" }} has a high error rate of {{ print "{{ $value }}" }} for more than 2 minutes"
+      expr: | 
+        (
+          (
+            sum(increase(http_request_duration_seconds_count{job="todo-cozy-backend", status=~"4.."}[5m])) by (instance) or vector(0) + 
+            sum(increase(http_request_duration_seconds_count{job="todo-cozy-backend", status=~"5.."}[5m])) by (instance) or vector(0)
+          ) / sum(increase(http_request_duration_seconds_count{job="todo-cozy-backend"}[5m])) by (instance) or vector(0)
+        ) >= 0.6
+      for: 2m
+      labels:
+        severity: critical
