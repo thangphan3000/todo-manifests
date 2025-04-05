@@ -6,8 +6,6 @@ metadata:
   name: {{ $.Release.Name }}-{{ $service }}
   labels:
     {{- toYaml $config.labels | nindent 6 }}
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
   type: {{ $config.type }}
   ports:
