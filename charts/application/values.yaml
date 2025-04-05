@@ -186,7 +186,6 @@ deployments:
 serviceMonitor:
   release: prometheus
   matchLabels:
-    argocd.argoproj.io/argo-instance-tracking: application
     service: backend
   port: backend-metrics-server
   path: /metrics
