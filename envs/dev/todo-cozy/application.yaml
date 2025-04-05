@@ -9,7 +9,8 @@ metadata:
     argocd-image-updater.argoproj.io/image-list: |
       backend=864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-backend:0.x,
       frontend=864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
-    argocd-image-updater.argoproj.io/update-strategy: semver
+    argocd-image-updater.argoproj.io/backend.update-strategy: semver
+    argocd-image-updater.argoproj.io/frontend.update-strategy: semver
     argocd-image-updater.argoproj.io/write-back-method: git
 spec:
   project: default
