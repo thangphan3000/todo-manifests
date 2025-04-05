@@ -12,6 +12,7 @@ metadata:
     argocd-image-updater.argoproj.io/image-list: frontend=864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
     argocd-image-updater.argoproj.io/frontend.update-strategy: semver
     argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/frontend.helm.image-tag: deployments.frontend.image.tag
 spec:
   project: default
   source:
