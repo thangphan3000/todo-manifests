@@ -4,14 +4,14 @@ helm:
     value: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
     forcestring: false
   - name: deployments.frontend.image.tag
-    value: 0.1.0
-    forcestring: false
+    value: 2.5.0
+    forcestring: true
   - name: deployments.backend.image.repository
     value: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-backend
     forcestring: false
   - name: deployments.backend.image.tag
-    value: 2.5.0
-    forcestring: true
+    value: 0.1.0
+    forcestring: false
   - name: image.name
     value: 864899847999.dkr.ecr.ap-southeast-1.amazonaws.com/nonprod-cozy-todo-frontend
     forcestring: true
