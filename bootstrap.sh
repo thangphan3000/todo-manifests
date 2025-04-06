@@ -13,7 +13,7 @@ apply_manifest_file() {
 }
 
 restart_sealed_secrets() {
-  echo "Restarting sealed-secrets pod"
+  echo "[INFO] Restarting sealed-secrets pod"
   kubectl delete pod -n sealed-secrets -l app.kubernetes.io/name=sealed-secrets
 }
 
